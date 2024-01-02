@@ -15,8 +15,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { View } from '../../components/Themed';
-import Colors from '../../constants/Colors';
+import { View } from '../../../components/Themed';
+import Colors from '../../../constants/Colors';
 // navigation
 // svg
 import Svg, { Path } from 'react-native-svg';
@@ -45,6 +45,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        headerShown: false,
       }}
       tabBar={(props) => <AnimatedTabBar {...props} />}
       initialRouteName="three"
@@ -80,7 +81,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="three"
+        name="index"
         options={{
           title: 'Tab Two',
           tabBarIcon: ({ color }) => (
