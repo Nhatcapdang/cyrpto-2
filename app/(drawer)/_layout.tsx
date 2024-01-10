@@ -2,6 +2,7 @@
 
 import {
   AntDesign,
+  EvilIcons,
   Feather,
   Ionicons,
   MaterialIcons,
@@ -16,6 +17,7 @@ import { router, useNavigation, usePathname } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { Button, Stack, Box } from 'native-base';
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const pathname = usePathname();
@@ -25,8 +27,16 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   }, [pathname]);
 
   return (
-    <DrawerContentScrollView {...props}>
-      <View style={styles.userInfoWrapper}>
+    <DrawerContentScrollView
+      {...props}
+      style={{
+        backgroundColor: 'red',
+        padding: 0,
+        margin: 0,
+        gap: 0,
+      }}
+    >
+      {/* <View style={styles.userInfoWrapper}>
         <Image
           source={{ uri: 'https://randomuser.me/api/portraits/women/26.jpg' }}
           width={80}
@@ -37,79 +47,49 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           <Text style={styles.userName}>John Doe</Text>
           <Text style={styles.userEmail}>john@email.com</Text>
         </View>
-      </View>
-      <DrawerItem
-        icon={({ color, size }) => (
-          <Feather
-            name="list"
-            size={size}
-            color={pathname == '/feed' ? '#fff' : '#000'}
+      </View> */}
+      {['Account', 'Get help', 'Send feed back', 'Perferences'].map(
+        (item, index) => (
+          <DrawerItem
+            label={(props) => (
+              <Stack
+                justifyContent={'space-between'}
+                flexDirection={'row'}
+                alignItems={'center'}
+                width={'full'}
+                w={'full'}
+                maxWidth={'full'}
+                maxW={'full'}
+                style={{
+                  backgroundColor: 'yellow',
+                  width: '100%',
+                  padding: 0,
+                  margin: 0,
+                }}
+              >
+                <EvilIcons name="user" size={30} color="black" />
+                <Text>{item}</Text>
+                <MaterialIcons
+                  {...props}
+                  name="keyboard-arrow-right"
+                  size={20}
+                  color="black"
+                />
+              </Stack>
+            )}
+            labelStyle={[styles.navItemLabel]}
+            style={{
+              backgroundColor: 'navy',
+              padding: 0,
+              margin: 0,
+              gap: 0,
+            }}
+            onPress={() => {
+              router.push('/');
+            }}
           />
-        )}
-        label={'Feed'}
-        labelStyle={[
-          styles.navItemLabel,
-          { color: pathname == '/feed' ? '#fff' : '#000' },
-        ]}
-        style={{ backgroundColor: pathname == '/feed' ? '#333' : '#fff' }}
-        onPress={() => {
-          router.push('/');
-        }}
-      />
-      <DrawerItem
-        icon={({ color, size }) => (
-          <AntDesign
-            name="user"
-            size={size}
-            color={pathname == '/profile' ? '#fff' : '#000'}
-          />
-        )}
-        label={'Profile'}
-        labelStyle={[
-          styles.navItemLabel,
-          { color: pathname == '/profile' ? '#fff' : '#000' },
-        ]}
-        style={{ backgroundColor: pathname == '/profile' ? '#333' : '#fff' }}
-        onPress={() => {
-          router.push('/');
-        }}
-      />
-      <DrawerItem
-        icon={({ color, size }) => (
-          <MaterialIcons
-            name="favorite-outline"
-            size={size}
-            color={pathname == '/favourites' ? '#fff' : '#000'}
-          />
-        )}
-        label={'Favourites'}
-        labelStyle={[
-          styles.navItemLabel,
-          { color: pathname == '/favourites' ? '#fff' : '#000' },
-        ]}
-        style={{ backgroundColor: pathname == '/favourites' ? '#333' : '#fff' }}
-        onPress={() => {
-          router.push('/favourites');
-        }}
-      />
-      <DrawerItem
-        icon={({ color, size }) => (
-          <Ionicons
-            name="settings-outline"
-            size={size}
-            color={pathname == '/settings' ? '#fff' : '#000'}
-          />
-        )}
-        label={'Settings'}
-        labelStyle={[
-          styles.navItemLabel,
-          { color: pathname == '/settings' ? '#fff' : '#000' },
-        ]}
-        style={{ backgroundColor: pathname == '/settings' ? '#333' : '#fff' }}
-        onPress={() => {
-          router.push('/settings');
-        }}
-      />
+        )
+      )}
     </DrawerContentScrollView>
   );
 };
@@ -143,10 +123,7 @@ export default function Layout() {
 }
 
 const styles = StyleSheet.create({
-  navItemLabel: {
-    marginLeft: -20,
-    fontSize: 18,
-  },
+  navItemLabel: {},
   userInfoWrapper: {
     flexDirection: 'row',
     paddingHorizontal: 10,

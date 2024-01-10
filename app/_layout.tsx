@@ -9,7 +9,8 @@ import {
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { LogBox, useColorScheme } from 'react-native';
+import { NativeBaseProvider } from 'native-base';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -41,6 +42,11 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  useEffect(() => {
+    LogBox.ignoreLogs([
+      'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
+    ]);
+  }, []);
   if (!loaded) {
     return null;
   }
@@ -52,11 +58,13 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-      </Stack>
-    </ThemeProvider>
+    <NativeBaseProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+        </Stack>
+      </ThemeProvider>
+    </NativeBaseProvider>
   );
 }
