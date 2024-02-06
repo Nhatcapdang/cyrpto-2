@@ -5,6 +5,7 @@ import {
   EvilIcons,
   Feather,
   Ionicons,
+  MaterialCommunityIcons,
   MaterialIcons,
 } from '@expo/vector-icons';
 import {
@@ -17,8 +18,8 @@ import { router, useNavigation, usePathname } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { Button, Stack, Box } from 'native-base';
-
+import { Button, Stack, Box, Center } from 'native-base';
+import { LinearGradient } from 'expo-linear-gradient';
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const pathname = usePathname();
 
@@ -30,10 +31,8 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
     <DrawerContentScrollView
       {...props}
       style={{
-        backgroundColor: 'red',
-        padding: 0,
-        margin: 0,
-        gap: 0,
+        height: '100%',
+        backgroundColor: 'navy',
       }}
     >
       {/* <View style={styles.userInfoWrapper}>
@@ -48,48 +47,59 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           <Text style={styles.userEmail}>john@email.com</Text>
         </View>
       </View> */}
-      {['Account', 'Get help', 'Send feed back', 'Perferences'].map(
-        (item, index) => (
-          <DrawerItem
-            label={(props) => (
-              <Stack
-                justifyContent={'space-between'}
-                flexDirection={'row'}
-                alignItems={'center'}
-                width={'full'}
-                w={'full'}
-                maxWidth={'full'}
-                maxW={'full'}
-                style={{
-                  backgroundColor: 'yellow',
-                  width: '100%',
-                  padding: 0,
-                  margin: 0,
-                }}
-              >
-                <EvilIcons name="user" size={30} color="black" />
-                <Text>{item}</Text>
-                <MaterialIcons
-                  {...props}
-                  name="keyboard-arrow-right"
-                  size={20}
-                  color="black"
-                />
-              </Stack>
-            )}
-            labelStyle={[styles.navItemLabel]}
-            style={{
-              backgroundColor: 'navy',
-              padding: 0,
-              margin: 0,
-              gap: 0,
-            }}
-            onPress={() => {
-              router.push('/');
-            }}
-          />
-        )
-      )}
+      <LinearGradient
+        // Background Linear Gradient
+        colors={['red']}
+        style={{
+          height: '100%',
+          width: '100%',
+        }}
+      >
+        {['Account', 'Get help', 'Send feed back', 'Perferences'].map(
+          (item, index) => (
+            <DrawerItem
+              key={index}
+              label={item}
+              icon={({ color, size }) => (
+                <EvilIcons name="user" size={size + 10} color={color} />
+              )}
+              labelStyle={[styles.navItemLabel]}
+              onPress={() => {
+                router.push('/');
+              }}
+            />
+          )
+        )}
+
+        <Stack
+          direction="row"
+          mb="2.5"
+          mt="1.5"
+          space={3}
+          justifyContent={'space-evenly'}
+        >
+          <Center>
+            <Ionicons name="wallet-outline" size={24} color="black" />
+            Wallet
+          </Center>
+          <Center>
+            <MaterialCommunityIcons
+              name="rotate-orbit"
+              size={24}
+              color="black"
+            />
+            Swap
+          </Center>
+          <Center>
+            <MaterialCommunityIcons
+              name="professional-hexagon"
+              size={24}
+              color="black"
+            />
+            Settings
+          </Center>
+        </Stack>
+      </LinearGradient>
     </DrawerContentScrollView>
   );
 };
@@ -123,7 +133,10 @@ export default function Layout() {
 }
 
 const styles = StyleSheet.create({
-  navItemLabel: {},
+  navItemLabel: {
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
   userInfoWrapper: {
     flexDirection: 'row',
     paddingHorizontal: 10,
